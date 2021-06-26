@@ -1,5 +1,8 @@
 # Algorithme-de-repartition
 Il s'agit d'une page web qui permet à des étudiants de faire une liste de voeux et un algorithme pour les répartir suivant une contrainte.
+Ce code est open source et libre d'accès, vous pouvez le modifier à votre convenance et peut s'adapter à plusieurs cas de figures. Il suffit de veiller à la cohérence des paramètres.
+
+### ATTENTION: Les cas où il n'y a plus de place ou qu'un projet n'est pas suffisamment demandé engendrera une boucle infini. Une des conditions pour que cela fonctionne est que la repartition des voeux prend tous les projets en compte avec au minimum le nombre maximum d'étudiants par projets (ici le projet le moins demandé devra avoir au minimum 4 demandes).
 
 Le code est entièrement commenté pour en comprendre son fonctionnement.
 
