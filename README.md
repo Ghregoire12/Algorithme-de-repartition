@@ -10,9 +10,16 @@ Le code est entièrement commenté pour en comprendre son fonctionnement.
 Chaque étudiant entre son nom, prénom et son école puis séléctionne 5 projets dans l'ordre qu'il souhaite. Le projet 1 est le choix de plus grande priorité, le choix 5 de plus faible priorité. Ensuite, il clique sur envoyer pour enregistrer ses données dans la BDD. 
 Un décompte en haut de la page permet de savoir le nombre d'étudiant inscrits. De plus, un compte à rebours peut être regler pour imposer une date de fin (mais une fois la date expirer, les votes ne sont pas coupé).
 
+Les informations entrées par chaque candidat se retrouve dans une BDD, une seule table suffit et prend cette forme :
+
+<img src="media/table_bdd.png">
+
+
 ## algorithme.php 
 
 Une fois les votes finis, il faut aller sur la page http://nomdedomaine.com/algorithme.php. Cela permet de lancer l'algorithme et d'afficher les résultats, de plus un fichier sous format CSV est généré et téléchargeable via un bouton.
+
+
 
 # Adaptation index.php
 
