@@ -6,25 +6,10 @@
 </head>
 <?php
 // On include le header avec le chargement des css / scripts
-$title = 'Home'; // Titre de la page
-$active_link = 'home';
+$title = 'Formulaire'; // Titre de la page
 include_once "cd-includes/header.php";
 // On include la barre de navigation public PC (mobile plus tard)
 ?>
-
-<style>
-.triangle{
- display : inline-block;
- height : 0;
- width : 0;
- border-right : 40px solid transparent;
- border-bottom : 40px solid green;
- color: white;
- font-size: 20px;
- padding-left: 8px;
- padding-top: 20px;
-}
-</style>
 
 <body>
 <div class="container d-flex flex-column justify-content-center">
@@ -75,6 +60,7 @@ include_once "cd-includes/header.php";
         <h4 class="mb-5">Projets</h4>
         <div class="d-flex flex-row justify-content-around flex-wrap mb-5">
             <div class="card mb-3" id="p1" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Blanchon.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P1 - Blanchon</h5>
@@ -82,6 +68,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p2" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Elkem.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P2 - Elkem Silicones</h5>
@@ -89,6 +76,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p3" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Les_toques_blanches.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P3 - Les Toques Blanches du Monde</h5>
@@ -96,6 +84,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p4" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Givaudan.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P4 - Givaudan</h5>
@@ -103,6 +92,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p5" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Chrysalead.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P5 - Chrysalead</h5>
@@ -110,6 +100,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p6" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Gamifly.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P6 - Gamifly</h5>
@@ -117,6 +108,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p7" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Sytral.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P7 - Sytral</h5>
@@ -124,6 +116,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p8" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Chanel.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P8 - Chanel</h5>
@@ -131,6 +124,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p9" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Effency.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P9 - Effency</h5>
@@ -138,6 +132,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p10" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Ninkasi.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P10 - Ninkasi</h5>
@@ -145,6 +140,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p11" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Hexatrans.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P11 - Hexatrans</h5>
@@ -152,6 +148,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p12" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Play_International.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P12 - Play International</h5>
@@ -159,6 +156,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p13" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Foods_International.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P13 - Foods International</h5>
@@ -166,6 +164,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p14" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Metropole_du_Grand_Paris.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P14 - Métropole du Grand Paris</h5>
@@ -173,6 +172,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p15" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Groupe_Seb.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P15 - Groupe Seb</h5>
@@ -180,6 +180,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p16" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Manifesta.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P16 - Manifesta</h5>
@@ -187,6 +188,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p17" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Mobility.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P17 - Mobility</h5>
@@ -194,6 +196,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p18" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Sotexpro.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P18 - Sotexpro</h5>
@@ -201,6 +204,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p19" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Wurth.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P19 - Wurth</h5>
@@ -208,6 +212,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p20" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Alstom.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P20 - Alstom</h5>
@@ -215,6 +220,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p21" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Veolia.jpg" alt="Card image cap" height="200" >
                 <div class="card-body">
                     <h5 class="card-title">P21 - Veolia</h5>
@@ -222,6 +228,7 @@ include_once "cd-includes/header.php";
                 </div>
             </div>
             <div class="card mb-3" id="p22" style="width: 18rem;" onclick="select(this)">
+                <div class=""><h1></h1></div>
                 <img class="card-img-top" src="media/Paredes.jpg" alt="Card image cap" height="200">
                 <div class="card-body">
                     <h5 class="card-title">P22 - Paredes</h5>
@@ -237,7 +244,7 @@ include_once "cd-includes/header.php";
 <?php include_once "cd-includes/footer.php"; ?>
 
 <script>
-    var compteur = 0;   
+    var compteur = 1;   
     var countDownDate = new Date("Mar 5, 2021 10:00:00").getTime(); //date de fin du compte à rebours
     var json = {};
 
@@ -246,54 +253,46 @@ include_once "cd-includes/header.php";
         var now = new Date().getTime();
     });
 
-    function select(element){ //permet d'afficher graphiquement que le projet element a été sélectionner.
-        array = element.childNodes;
-        if(array.length == 5 && compteur < 5){
-            element.classList.toggle("border");
-            element.classList.toggle("border-success");
-            compteur++;
-            var div = document.createElement("div");
-            div.classList.add("triangle");
-            div.id = "choice"+compteur;
-            div.appendChild(document.createTextNode(compteur));
-            div.style.zIndex = "2";
-            element.appendChild(div);
-            console.log($("#choice"+compteur).parent().attr('id'));
-        } else if (compteur < 6 && array.length == 6){
-            element.classList.toggle("border");
-            element.classList.toggle("border-success");
-            element.removeChild(element.lastChild);
-            compteur--;
-        }
-        //à refaire (j'ai pas eu le temps), permet de renuméroter les projets sélectionné si on en désélectionne un.
-        /*var index = 6; 
-        for(var i = 1; i <= compteur + 1; i++){
-            var parent = document.getElementById("choice"+i).parentNode;
-            if(typeof parent != 'undefined'){
-                if(i > index){
-                    parent.removeChild(parent.lastChild);
-                    var div = document.createElement("div");
-                    div.classList.add("triangle");
-                    div.id = "choice"+i-1;
-                    div.appendChild(document.createTextNode(i-1));
-                    div.style.zIndex = "2";
-                    parent.appendChild(div);
-                } else {
-                    parent.removeChild(parent.lastChild);
-                    var div = document.createElement("div");
-                    div.classList.add("triangle");
-                    div.id = "choice"+i;
-                    div.appendChild(document.createTextNode(i));
-                    div.style.zIndex = "2";
-                    parent.appendChild(div);
-                }
+    function select(element){ //permet d'afficher graphiquement qu'un projet a été sélectionner, en affichant son rang.
+        if($(".triangle").length < 5){
+            element.classList.toggle("selected");
+            element.firstElementChild.classList.toggle("triangle");
+            if(!element.classList.contains("selected")){
+                reNumChoices(element.firstElementChild.id.split("choice")[1]);
+                element.firstElementChild.firstElementChild.innerHTML = "";
+                element.firstElementChild.id = "";
+                compteur--;
+                console.log($(".triangle"));
             } else {
-                index = i;
+                if($(".triangle").length <= 5){
+                    element.firstElementChild.firstElementChild.innerHTML = compteur;
+                    element.firstElementChild.id = "choice"+compteur;
+                    compteur++
+                }
             }
-        }*/
+        } else if(element.classList.contains("selected")) {
+            element.classList.remove("selected");
+            element.firstElementChild.classList.remove("triangle");
+            reNumChoices(element.firstElementChild.id.split("choice")[1]);
+            element.firstElementChild.firstElementChild.innerHTML = "";
+            element.firstElementChild.id = "";
+            compteur--;
+            
+        }
     }
 
-    var x = setInterval(function() { //compte à rebours (inutile)
+    function reNumChoices(id){ //permet de renuméroter les choix, utile que dans la fonction select.
+        $(".triangle").each(function(index) {
+            number = $(".triangle")[index].id.split("choice")[1];
+            console.log(number);
+            if(number > id){
+                $(".triangle")[index].id = "choice" + (number - 1);
+                $(".triangle")[index].firstElementChild.innerHTML = number - 1;
+            }
+        });
+    }
+
+    var x = setInterval(function() { //compte à rebours (la date d'expiration se règle via la variable countDownDate)
         var now = new Date().getTime();
         var distance = countDownDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -308,13 +307,6 @@ include_once "cd-includes/header.php";
         }
     }, 1000);
 
-    function toggleInscrits(){ //permet de masquer/afficher la liste des inscrits
-        if($('#inscrits').is(":hidden")){
-            $('#inscrits').show();
-        } else {
-            $('#inscrits').hide();
-        }
-    }
 
     function submit(){  //envoi des données dans la BDD permet une requête AJAX, alert si les champs sont pas remplis
         var state = 0;
@@ -334,7 +326,7 @@ include_once "cd-includes/header.php";
             state = 1;
         }
 
-        if(compteur !=5){
+        if(compteur !=6){
             state = 1;
         }
 

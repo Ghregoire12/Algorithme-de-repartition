@@ -1,7 +1,7 @@
-<?php
-include_once "cd-includes/bdd.php";     
+<?php include_once "cd-includes/bdd.php";  
 
 $nb_de_choix = 22;  //condition initiale.
+$nb_max_par_projet = 4;
 $score = 0; //permet d'avoir un temoin d'efficacité (ne fonctionne pas), plus c'est proche de 0, plus cela signifie que les gens ont leur premier choix (peut être rapporté sur le nombre d'étudiants placé pour avoir le choix moyen)
 $niveau = 1; //de priorité, permet la comparaison avec ($choice_priority), on l'incrémente s'il n'y a plus le choix que de placer des étudiants de d'école déjà représenté
 
@@ -18,13 +18,13 @@ Organisation des différents élements:
     |   ID                    | --> Permet de retrouver le numéro du projet (presque inutile car il correspond à l'indice dans la liste +1)
     |   Etudiants Potentiels  | --> Liste des indices des étudiants qui ont le projet dans leurs voeux 
     |   Etudiants Choisis     | --> Liste des indices des étudiants séléctionné sur le projet
-    |   Projet Complet        | --> Temoin de remplissage du projet (initialiser à false et passe à true s'il y a 4 personnes sélectionnée)
+    |   Projet Complet        | --> Temoin de remplissage du projet (initialiser à false et passe à true s'il y a 4 personnes sélectionnées)
     |_________________________|
 
     ___________________________ 
     |        Étudiant         |
     |_________________________|
-    |   ID                    | --> ID de l'étudiant dans la BDD (nécessaire pour replacer enregistrer les placements dans la BDD)
+    |   ID                    | --> ID de l'étudiant dans la BDD (nécessaire pour enregistrer les placements dans la BDD)
     |   ID de l'école         | --> ID de l'école (chiffre plutôt que String pour des comparaisons plus rapide dans le code)
     |   Liste des choix       | --> Liste (array[5]) prenant des objets choix
     |   Temoin de placement   | --> Initialisé à false, passe à true s'il est placé sur un projet
@@ -46,7 +46,7 @@ L'objectif est de répartir les étudiants sur les 22 projets, en prenant en com
 Pour cela, il faut prendre en compte que l'intérêt des projets ne sera pas forcément uniforme, certains font plus rever que d'autres.
 Donc il est indispensable de traiter les projets les moins demandés en premier pour être sur de pouvoir les remplir.
 Et si il n'y a plus de personnes d'autres écoles de dispo pour le remplir, on prend des étudiants de la même école demandeur sur le projet.
-Cela permet aussi d'écremer au fur et à mesure les projets les plus demandé.
+Cela permet aussi d'écremer au fur et à mesure les personnes intéréssées par les projets les plus demandé.
 
 
 Reste à faire:
@@ -59,7 +59,7 @@ Reste à faire:
 */
 
 
-class choice {                                      
+class choice { //descripteur de la classe choice                                 
     var $project_id;
     var $choice_number;
     var $choice_priority = 1;
@@ -75,7 +75,7 @@ class choice {
     }
 }
 
-class student {
+class student { //descripteur de la classe student 
     var $id;
     var $school_id;
     var $choices;
@@ -92,7 +92,7 @@ class student {
         $this->placed = true;
     }
 
-    function findChoiceNumber($project_id){ //permet de retrouver le n° du choix, pour donner une ordre de priorité
+    function findChoiceNumber($project_id){ //permet de retrouver le n° du choix, pour donner un ordre de priorité
         for($i = 0; $i < 5; $i++){
             if ($this->choices[$i]->project_id == $project_id){
                 return $i;
@@ -103,7 +103,7 @@ class student {
 } 
 
 
-class project { 
+class project { //descripteur de la classe projet 
     var $id;
     var $students_pot = array();
     var $students = array();
@@ -119,10 +119,10 @@ class project {
         $this->students_pot[] = $student_id;  //student_id est la position de l'étudiant dans la liste $list_students
     }
 
-    function addStudent($list_students,$list_projects, $score)    //séléction de l'étudiant puis placement dans la liste des étudiant du projet
+    function addStudent($list_students,$list_projects)    //séléction de l'étudiant puis placement dans la liste des étudiant du projet
     {
         if(!$this->full){ //si le projet n'est pas plein
-            $student_id = $this->findBestFit($list_students); //on cherche l'étudiant qui a le plus haut niveau de priorité
+            $student_id = $this->findBestFit($list_students); //on cherche l'étudiant qui a le plus haut niveau de priorité (le plus proche de 0)
             if($student_id == 1000){ //si l'indice est 1000 c'est qu'il n'y en a pas
                 return false; //donc on ne peut pas en ajouter
             } else {    // sinon on le place
@@ -132,14 +132,14 @@ class project {
                     $proj_id = (int)$list_students[$student_id]->choices[$i]->project_id - 1;
                     $list_projects[$proj_id]->unsetStudent($student_id);
                 }
-                $score += $list_students[$student_id]->findChoiceNumber($this->id); //temoin de performance (donne la distance par rapport à son premier choix) mais pas fonctionnel
-                $students_nb = count($students_pot);    //le nombre d'étudiants potentiels restant 
-                for($i = 0; $i < $students_nb; $i++){     //tous les étudiants intéresser par le même projet provenant de la même école voient leur priorité réduire sur ce projet
+                $score = $score + $list_students[$student_id]->findChoiceNumber($this->id); //temoin de performance (donne la distance par rapport à son premier choix) mais pas fonctionnel
+                $students_nb = count($this->students_pot);    //le nombre d'étudiants potentiels restant 
+                for($i = 0; $i < $students_nb; $i++){     //tous les étudiants intéresser par le même projet provenant de la même école voient leur priorité réduire sur ce projet (on incrémente la variable choice_priority du choix)
                     if($list_students[$this->students_pot[$i]]->school_id == $list_students[$student_id]->school_id){
                         $list_students[$this->students_pot[$i]]->choices[$list_students[$this->students_pot[$i]]->findChoiceNumber($this->id)]->incPriority();
                     }
                 }
-                if(count($this->students) == 4){ //si le projet est plein, on actualise son temoiin
+                if(count($this->students) == $nb_max_par_projet){ //si le projet est plein, on actualise son temoiin
                     $this->full = true;
                 }
                 return true;    //return true permet de temoigner qu'un étudiant à bien été placé.
@@ -154,7 +154,7 @@ class project {
         sort($this->students_pot); //on trie la liste pour ne pas laisser de trou dans les indices
     }
 
-    function nbOfNPriorityChoices($n,$list_students){ //permet de récuperer le nb d'étudiants potentiels dont les école ne sont pas déjà représenté sur le projet
+    function nbOfNPriorityChoices($n,$list_students){ //permet de récuperer le nb d'étudiants potentiels dont les écoles ne sont pas déjà représenté sur le projet
         $valRen = 0;
         for($i = 0; $i < count($this->students_pot); $i++){
             if($list_students[$this->students_pot[$i]]->choices[$list_students[$this->students_pot[$i]]->findChoiceNumber($this->id)]->choice_priority == $n){
@@ -166,19 +166,16 @@ class project {
 
     function findBestFit($list_students){ //permet de trouver le premier étudiant qui à la priorité maximale. Peut être améliorer facilement 
         $id = 1000;                       //en placant les étudiants de priorité maximale dans une liste et en prendre un au hasard (manque d'impartialité pour le moment)
-        $val = 100;
         $prio = 100;
         for($i = 0; $i < count($this->students_pot); $i++){
             $student_choice = $list_students[$this->students_pot[$i]]->choices[$list_students[$this->students_pot[$i]]->findChoiceNumber($this->id)];
-            if($student_choice->choice_priority < $prio){
+
+            // FORMULE DETERMINANT LA PRIORIT2 EN FONCTION DU POIDS DES PARAMÈTRES
+
+            $val = $student_choice->choice_number + ($student_choice->choice_priority)*5;
+            if($val < $prio){
                 $id = $this->students_pot[$i];
-                $val = $student_choice->choice_number;
-                $prio = $student_choice->choice_priority;
-            }
-            if($student_choice->choice_number < $val && $student_choice->choice_priority == $prio){
-                $id = $this->students_pot[$i];
-                $val = $student_choice->choice_number;
-                $prio = $student_choice->choice_priority;
+                $prio = $val;
             }
         }
         return $id;
@@ -208,11 +205,10 @@ function fillStudentList($bdd){ //Récupère les infos de tous les étudiants in
 
 $list_students = fillStudentList($bdd); //Liste de référence des étudiants
 
-
 function fillProjectList($bdd,$nb_de_choix, $list_students){
     $list = array();
     $nb_students = count($list_students);   
-    for($i = 0; $i < $nb_de_choix; $i++){   //on crée une liste avec de projets (ici 22 projets)
+    for($i = 0; $i < $nb_de_choix; $i++){   //on crée une liste des projets (ici 22 projets)
         $list[] = new project($i+1);
         for ($j = 0; $j < $nb_students; $j++){
             if($list_students[$j]->findChoiceNumber($i+1) != 5){  //on place les éléments intéressé par le projet dans la liste des étudiants potentiels
@@ -225,17 +221,6 @@ function fillProjectList($bdd,$nb_de_choix, $list_students){
 
 $list_projects = fillProjectList($bdd, $nb_de_choix, $list_students); //Liste des projets 
 
-
-
-
-
-
-
-
-
-
-
-
 function sortByMinDemand($list_projects, $niveau, $nb_de_choix, $list_students){ //permet de créer une liste des projets par ordre de demande, ne prends pas en compte les projets plein.
     $list = array();
     $listRen = array();
@@ -244,7 +229,7 @@ function sortByMinDemand($list_projects, $niveau, $nb_de_choix, $list_students){
     }
     for($i = 0; $i < $nb_de_choix; $i++){
         $id = 100;
-        $min = 100;
+        $min = 1000;
         for ($j = 0; $j < count($list); $j++){
             $val = $list_projects[$list[$j]]->nbOfNPriorityChoices($niveau, $list_students);
             if($val < $min && $val > 0){
@@ -299,12 +284,16 @@ function numberOfUnplacedStudents($list_students){  //donne le nombre d'étudian
 
 
 
+/*-----------------------------------------------BOUCLE PRINCIPALE----------------------------------------------------------*/
+
+
+
 
 
 while(numberOfUnplacedStudents($list_students) > 0){ //tant qu'il reste des étudiants à placer
-    $sorted_list_projects = sortByMinDemand($list_projects, $niveau, $nb_de_choix, $list_students); //on crée une liste d'indice de projet dans l'ordre croissant de demandes
+    $sorted_list_projects = sortByMinDemand($list_projects, $niveau, $nb_de_choix, $list_students); //on crée une liste d'indices de projet dans l'ordre croissant de demandes
     $counter = 0; //counter pour arreter la boucle while suivante si on arrive pas à placer d'étudiants
-    while($counter < count($sorted_list_projects) && !($list_projects[$sorted_list_projects[$counter]]->addStudent($list_students,$list_projects, $score))){ //tant que le counter dépasse la taille de la liste d'indice
+    while($counter < count($sorted_list_projects) && !($list_projects[$sorted_list_projects[$counter]]->addStudent($list_students,$list_projects))){ //tant que le counter dépasse la taille de la liste d'indice
         $counter++;                                                                                                                                             //et tant qu'il n'y a pas d'étudiant placé.
     }   
 }
@@ -314,6 +303,13 @@ while(numberOfUnplacedStudents($list_students) > 0){ //tant qu'il reste des étu
 
 
 <!---------------------------------------------- AFFICHAGE DES RESULTATS --------------------------------------------------->
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -322,15 +318,15 @@ while(numberOfUnplacedStudents($list_students) > 0){ //tant qu'il reste des étu
 <?php
 // On include le header avec le chargement des css / scripts
 $title = 'Resultats'; // Titre de la page
-$active_link = 'res';
 include_once "cd-includes/header.php";
 // On include la barre de navigation public PC (mobile plus tard)
 
 ?>
 <body>
-    <div class="container">
+    <div class="container mt-2 mb-2">
 
-        <p><h1>Score = <?php echo $score;?></h1></p>
+        <a href="results.csv" class="button" download="repartition_projet_innovation.csv">Télécharger les résultats sous format csv</a>
+        <h1>Score = <?php echo $score;?></h1>
 
         <table class="table">
             <thead>
@@ -344,6 +340,9 @@ include_once "cd-includes/header.php";
             <tbody>
     <?php 
     $nb_place = 0;
+    $fp = fopen('results.csv', 'w');
+    fputs($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+    fputcsv($fp,array('PROJET', 'NOM','PRÉNOM', 'ÉCOLE'));
     for($i = 0; $i<count($list_projects); $i++){
         for($j = 0; $j< count($list_projects[$i]->students); $j++){
             $nb_place++;
@@ -358,35 +357,41 @@ include_once "cd-includes/header.php";
                 <td>".$rep['inscription_lastname']."</td>
                 <td>".$rep['inscription_name']."</td>
             ";
-            //<td>".$rep['inscription_lastname']."</td>
             switch($rep['inscription_school']){
                 case 1:
                     echo "<td>CPE</td>
                     </tr>";
+                    fputcsv($fp,array($list_projects[$i]->id, $rep['inscription_lastname'], $rep['inscription_name'], 'CPE'));
                     break;
                 case 2:
                     echo "<td>ISARA</td>
                     </tr>";
+                    fputcsv($fp,array($list_projects[$i]->id, $rep['inscription_lastname'], $rep['inscription_name'], 'ISARA'));
                     break;
                 case 3:
                     echo "<td>ITECH</td>
                     </tr>";
+                    fputcsv($fp,array($list_projects[$i]->id, $rep['inscription_lastname'], $rep['inscription_name'], 'ITECH'));
                     break;
                 case 4:
                     echo "<td>ESTP</td>
                     </tr>";
+                    fputcsv($fp,array($list_projects[$i]->id, $rep['inscription_lastname'], $rep['inscription_name'], 'ESTP'));
                     break;
                 case 5:
                     echo "<td>EMSE</td>
                     </tr>";
+                    fputcsv($fp,array($list_projects[$i]->id, $rep['inscription_lastname'], $rep['inscription_name'], 'EMSE'));
                     break;
                 case 6:
                     echo "<td>EM LYON</td>
                     </tr>";
+                    fputcsv($fp,array($list_projects[$i]->id, $rep['inscription_lastname'], $rep['inscription_name'], 'EM LYON'));
                     break;
             }
         }
     }
+    fclose($fp);
     
     ?>
             </tbody>
