@@ -47,8 +47,20 @@ var countDownDate = new Date("Mar 5, 2021 10:00:00").getTime(); //date de fin du
 
 # Adaptation algorithme.php
 
-Dans ce fichier, il y a plusieurs paramètres à modifier, ils se situent en haut du fichier.
+Dans ce fichier, il y a plusieurs paramètres à modifier pour le fonctionnement de l'algorithme, ils se situent en haut du fichier.
 ```
 $nb_de_choix = 22;  //code le nombre de projets
 $nb_max_par_projet = 4;  //code le nombre max d'étudiants par projets
 ```
+
+# Adaptation variables.php
+
+Dans ce fichier, il y a plusieurs paramètres à modifier pour pouvoir se connecter à la BDD, ils se situent en haut du fichier.
+```
+$database['hote'] = '*********';    //Adresse de l'hebergeur de la BDD
+$database['user'] = '*********';    //Nom d'utilisateur
+$database['base'] = '*********';    //Nom de la base
+$database['pass'] = '*********';    //Mot de passe
+```
+Il est nécessaire de les modifier pour que les inscriptions soient prisent en compte. De plus, l'algorithme récupère toutes ces infos provenant de la BDD.
+Il faut aussi recréer la table illustrer en haut du README. Pour cela il suffit d'importer sur le portail phpmyadmin de votre BDD le fichier bdd.sql
